@@ -19,7 +19,7 @@
 #define WSD 195
 #define WASD 197
 
-void narysujLabirynt(const unsigned char labirynt[8][8]) {
+void narysujLabirynt(const unsigned int labirynt[][8]) {
     for(int i=0; i<8; ++i) {
         for(int j=0; j<8; ++j) {
             printf("%c", labirynt[i][j]);
@@ -28,7 +28,7 @@ void narysujLabirynt(const unsigned char labirynt[8][8]) {
     }
 }
 
-void narysujWartosci(int wartosci[8][8]) {
+void narysujWartosci(int wartosci[][8]) {
     for(int i=0; i<8; ++i) {
         for(int j=0; j<8; ++j) {
             printf("%d", wartosci[i][j]);
@@ -37,78 +37,75 @@ void narysujWartosci(int wartosci[8][8]) {
     }
 }
 
-void znajdzNajkrotszaSciezkeRekurencja(int tabSciezki[8][8], const unsigned char labirynt[8][8], int posX, int posY) {
-    switch(labirynt[posX][posY]) {
-        if(labirynt[posX][posY] == W) {
-            tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
-        }
-        if(labirynt[posX][posY] == A) {
-            tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
-        }
-        if(labirynt[posX][posY] == S) {
-            tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
-        }
-        if(labirynt[posX][posY] == D) {
-            tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
-        }
-        if(labirynt[posX][posY] == WS) {
-            tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
-            tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
-        }
-        if(labirynt[posX][posY] == AS) {
-            tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
-            tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
-        }
-        if(labirynt[posX][posY] == WD) {
-            tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
-            tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
-        }
-        if(labirynt[posX][posY] == AD) {
-            tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
-            tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
-        }
-        if(labirynt[posX][posY] == WA) {
-            tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
-            tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
-        }
-        if(labirynt[posX][posY] == SD) {
-            tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
-            tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
-        }
-        if(labirynt[posX][posY] == WAS) {
-            tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
-            tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
-            tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
-        }
-        if(labirynt[posX][posY] == WAD) {
-            tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
-            tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
-            tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
-        }
-        if(labirynt[posX][posY] == ASD) {
-            tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
-            tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
-            tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
-        }
-        if(labirynt[posX][posY] == WSD) {
-            tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
-            tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
-            tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
-        }
-        if(labirynt[posX][posY] == WASD) {
-            tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
-            tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
-            tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
-            tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
-        }
+void znajdzNajkrotszaSciezkeRekurencja(int tabSciezki[8][8], const unsigned int labirynt[][8], int posX, int posY) {
+    if(labirynt[posY][posX] == W) {
+        tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
+    }
+    if(labirynt[posY][posX] == A) {
+        tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
+    }
+    if(labirynt[posY][posX] == S) {
+        tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
+    }
+    if(labirynt[posY][posX] == D) {
+        tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
+    }
+    if(labirynt[posY][posX] == WS) {
+        tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
+        tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
+    }
+    if(labirynt[posY][posX] == AS) {
+        tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
+        tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
+    }
+    if(labirynt[posY][posX] == WD) {
+        tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
+        tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
+    }
+    if(labirynt[posY][posX] == AD) {
+        tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
+        tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
+    }
+    if(labirynt[posY][posX] == WA) {
+        tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
+        tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
+    }
+    if(labirynt[posY][posX] == SD) {
+        tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
+        tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
+    }
+    if(labirynt[posY][posX] == WAS) {
+        tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
+        tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
+        tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
+    }
+    if(labirynt[posY][posX] == WAD) {
+        tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
+        tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
+        tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
+    }
+    if(labirynt[posY][posX] == ASD) {
+        tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
+        tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
+        tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
+    }
+    if(labirynt[posY][posX] == WSD) {
+        tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
+        tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
+        tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
+    }
+    if(labirynt[posY][posX] == WASD) {
+        tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
+        tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
+        tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
+        tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
     }
 }
 
-void znajdzNajkrotszaSciezkeStart(const unsigned char labirynt[8][8]) {
+void znajdzNajkrotszaSciezkeStart(const unsigned int labirynt[][8]) {
     int tabSciezki[8][8] = {0};
-    int posX = 0;
+    int posX = 2;
     int posY = 0;
-    tabSciezki[posX][posY] = 0;
 
     znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY);
     narysujWartosci(tabSciezki);
@@ -116,7 +113,7 @@ void znajdzNajkrotszaSciezkeStart(const unsigned char labirynt[8][8]) {
 
 int main() {
     Robot robot = {0, 0, 1}; 	// Obiekt robota (pozycja x, pozycja y, orientacja)
-    const unsigned char tabLabiryntu[8][8] = { {D, AD, ASD, AD, AS, SD, ASD, A}, 
+    const unsigned int tabLabiryntu[8][8] = { {D, AD, ASD, AD, AS, SD, ASD, A}, 
                                 {D, ASD, WA, S, WS, WS, WD, AS}, 
                                 {S, WS, SD, WAS, WD, WAD, AS, W},
                                 {WSD, WA, WS, WSD, AS, S, WD, AS},
