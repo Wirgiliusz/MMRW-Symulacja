@@ -8,28 +8,27 @@
 #define S 203
 #define D 204
 #define WS 179
-#define SA 191
+#define AS 191
 #define WD 192
-#define DA 196
+#define AD 196
 #define WA 217
-#define DS 218
-#define WSA 180
-#define WDA 193
-#define DSA 194
-#define WDS 195
-#define WDSA 197
-
+#define SD 218
+#define WAS 180
+#define WAD 193
+#define ASD 194
+#define WSD 195
+#define WASD 197
 
 int main() {
     Robot robot = {0, 0, 1}; 	// Obiekt robota (pozycja x, pozycja y, orientacja)
-    char tabLabiryntu[8][8] = { {D, DA, DSA, DA, SA, DS, DSA, A}, 
-                                {D, DSA, WA, S, WS, WS, WD, SA}, 
-                                {S, WS, DS, WSA, WD, WDA, SA, W},
-                                {WDS, WA, WS, WDS, SA, S, WD, SA},
-                                {WS, D, WSA, WD, WA, WDS, DA, WA},
-                                {WDS, A, WDS, A, DS, WDSA, DA, SA},
-                                {WDS, DSA, WSA, D, WA, WS, D, WSA},
-                                {W, W, WD, DA, DA, WDA, DA, WA} };
+    char tabLabiryntu[8][8] = { {D, AD, ASD, AD, AS, SD, ASD, A}, 
+                                {D, ASD, WA, S, WS, WS, WD, AS}, 
+                                {S, WS, SD, WAS, WD, WAD, AS, W},
+                                {WSD, WA, WS, WSD, AS, S, WD, AS},
+                                {WS, D, WAS, WD, WA, WSD, AD, WA},
+                                {WSD, A, WSD, A, SD, WASD, AD, AS},
+                                {WSD, ASD, WAS, D, WA, WS, D, WAS},
+                                {W, W, WD, AD, AD, WAD, AD, WA} };
 
     for(int i=0; i<8; ++i) {
         for(int j=0; j<8; ++j) {
@@ -37,7 +36,7 @@ int main() {
         }
         printf("\n");
     }
-    
+   
     /*
     printf("PosX: %d \nPosY: %d \n", robot.posX, robot.posY);
     jedzPrawo(&robot);
