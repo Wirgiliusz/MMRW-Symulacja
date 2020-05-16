@@ -10,10 +10,10 @@
             "request": "launch",
             "program": "${workspaceFolder}\\out.exe",
             "args": [],
-            "stopAtEntry": true,
+            "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": true,
+            "externalConsole": false,
             "MIMode": "gdb",
             "miDebuggerPath": "c:\\mingw\\bin\\gdb.exe",
             "setupCommands": [
