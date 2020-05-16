@@ -3,32 +3,33 @@
 #include "..\Inc\robot.h"
 
 // Definicja labiryntu na podstawie: W (gora), A (lewo), S (dol), D (prawo).
-#define A 185
-#define D 204
 #define W 202
+#define A 185
 #define S 203
+#define D 204
 #define WS 179
-#define WAS 180
-#define AS 191
+#define SA 191
 #define WD 192
-#define AWD 193
-#define ASD 194
-#define WDS 195
-#define AD 196
-#define WASD 197
-#define AW 217
+#define DA 196
+#define WA 217
 #define DS 218
+#define WSA 180
+#define WDA 193
+#define DSA 194
+#define WDS 195
+#define WDSA 197
+
 
 int main() {
     Robot robot = {0, 0, 1}; 	// Obiekt robota (pozycja x, pozycja y, orientacja)
-    char tabLabiryntu[8][8] = { {D, AD, ASD, AD, AS, DS, ASD, A}, 
-                                {D, ASD, AW, S, WS, WS, WD, AS}, 
-                                {S, WS, DS, WAS, WD, AWD, AS, W},
-                                {WDS, AW, WS, WDS, AS, S, WD, AS},
-                                {WS, D, WAS, WD, AW, WDS, AD, AW},
-                                {WDS, A, WDS, A, DS, WASD, AD, AS},
-                                {WDS, ASD, WAS, D, AW, WS, D, WAS},
-                                {W, W, WD, AD, AD, AWD, AD, AW} };
+    char tabLabiryntu[8][8] = { {D, DA, DSA, DA, SA, DS, DSA, A}, 
+                                {D, DSA, WA, S, WS, WS, WD, SA}, 
+                                {S, WS, DS, WSA, WD, WDA, SA, W},
+                                {WDS, WA, WS, WDS, SA, S, WD, SA},
+                                {WS, D, WSA, WD, WA, WDS, DA, WA},
+                                {WDS, A, WDS, A, DS, WDSA, DA, SA},
+                                {WDS, DSA, WSA, D, WA, WS, D, WSA},
+                                {W, W, WD, DA, DA, WDA, DA, WA} };
 
     for(int i=0; i<8; ++i) {
         for(int j=0; j<8; ++j) {
