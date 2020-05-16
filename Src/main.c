@@ -31,83 +31,183 @@ void narysujLabirynt(const unsigned int labirynt[][8]) {
 void narysujWartosci(int wartosci[][8]) {
     for(int i=0; i<8; ++i) {
         for(int j=0; j<8; ++j) {
-            printf("%d", wartosci[i][j]);
+            printf("%d\t", wartosci[i][j]);
         }
         printf("\n");
     }
 }
 
 void znajdzNajkrotszaSciezkeRekurencja(int tabSciezki[8][8], const unsigned int labirynt[][8], int posX, int posY) {
-    if(labirynt[posY][posX] == W) {
-        tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
-    }
-    if(labirynt[posY][posX] == A) {
-        tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
-    }
-    if(labirynt[posY][posX] == S) {
-        tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
-    }
-    if(labirynt[posY][posX] == D) {
-        tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
-    }
-    if(labirynt[posY][posX] == WS) {
-        tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
-        tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
-    }
-    if(labirynt[posY][posX] == AS) {
-        tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
-        tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
-    }
-    if(labirynt[posY][posX] == WD) {
-        tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
-        tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
-    }
-    if(labirynt[posY][posX] == AD) {
-        tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
-        tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
-    }
-    if(labirynt[posY][posX] == WA) {
-        tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
-        tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
-    }
-    if(labirynt[posY][posX] == SD) {
-        tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
-        tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
-    }
-    if(labirynt[posY][posX] == WAS) {
-        tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
-        tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
-        tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
-    }
-    if(labirynt[posY][posX] == WAD) {
-        tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
-        tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
-        tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
-    }
-    if(labirynt[posY][posX] == ASD) {
-        tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
-        tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
-        tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
-    }
-    if(labirynt[posY][posX] == WSD) {
-        tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
-        tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
-        tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
-    }
-    if(labirynt[posY][posX] == WASD) {
-        tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
-        tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
-        tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
-        tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
+    switch(labirynt[posY][posX]) {
+        case W:
+            if(!tabSciezki[posY-1][posX] || tabSciezki[posY-1][posX] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY-1);
+            }
+            
+        break;
+        case A:
+            if(!tabSciezki[posY][posX-1] || tabSciezki[posY][posX-1] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX-1, posY);
+            }
+        break;
+        case S:
+            if(!tabSciezki[posY+1][posX] || tabSciezki[posY+1][posX] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY+1);
+            }         
+        break;
+        case D:
+            if(!tabSciezki[posY][posX+1] || tabSciezki[posY][posX+1] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX+1, posY);
+            }  
+        break;
+        case WS:
+            if(!tabSciezki[posY-1][posX] || tabSciezki[posY-1][posX] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY-1);
+            }
+            if(!tabSciezki[posY+1][posX] || tabSciezki[posY+1][posX] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY+1);
+            }  
+        break;
+        case AS:
+            if(!tabSciezki[posY][posX-1] || tabSciezki[posY][posX-1] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX-1, posY);
+            }
+            if(!tabSciezki[posY+1][posX] || tabSciezki[posY+1][posX] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY+1);
+            }
+        break;
+        case WD:
+            if(!tabSciezki[posY-1][posX] || tabSciezki[posY-1][posX] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY-1);
+            }
+            if(!tabSciezki[posY][posX+1] || tabSciezki[posY][posX+1] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX+1, posY);
+            }
+        break;
+        case AD:
+            if(!tabSciezki[posY][posX-1] || tabSciezki[posY][posX-1] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX-1, posY);
+            }
+            if(!tabSciezki[posY][posX+1] || tabSciezki[posY][posX+1] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX+1, posY);
+            }
+        break;
+        case WA:
+            if(!tabSciezki[posY-1][posX] || tabSciezki[posY-1][posX] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY-1);
+            }
+            if(!tabSciezki[posY][posX-1] || tabSciezki[posY][posX-1] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX-1, posY);
+            }
+        break;
+        case SD:
+            if(!tabSciezki[posY+1][posX] || tabSciezki[posY+1][posX] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY+1);
+            }
+            if(!tabSciezki[posY][posX+1] || tabSciezki[posY][posX+1] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX+1, posY);
+            }
+        break;
+        case WAS:
+            if(!tabSciezki[posY-1][posX] || tabSciezki[posY-1][posX] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY-1);
+            }
+            if(!tabSciezki[posY][posX-1] || tabSciezki[posY][posX-1] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX-1, posY);
+            }
+            if(!tabSciezki[posY+1][posX] || tabSciezki[posY+1][posX] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY+1);
+            }
+        break;
+        case WAD:
+            if(!tabSciezki[posY-1][posX] || tabSciezki[posY-1][posX] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY-1);
+            }
+            if(!tabSciezki[posY][posX-1] || tabSciezki[posY][posX-1] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX-1, posY);
+            }
+            if(!tabSciezki[posY][posX+1] || tabSciezki[posY][posX+1] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX+1, posY);
+            }
+        break;
+        case ASD:
+            if(!tabSciezki[posY][posX-1] || tabSciezki[posY][posX-1] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX-1, posY);
+            }
+            if(!tabSciezki[posY+1][posX] || tabSciezki[posY+1][posX] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY+1);
+            }
+            if(!tabSciezki[posY][posX+1] || tabSciezki[posY][posX+1] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX+1, posY);
+            }
+        break;
+        case WSD:
+            if(!tabSciezki[posY-1][posX] || tabSciezki[posY-1][posX] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY-1);
+            }
+            if(!tabSciezki[posY+1][posX] || tabSciezki[posY+1][posX] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY+1);
+            }
+            if(!tabSciezki[posY][posX+1] || tabSciezki[posY][posX+1] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX+1, posY);
+            }
+        break;
+        case WASD:
+            if(!tabSciezki[posY-1][posX] || tabSciezki[posY-1][posX] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY-1);
+            }
+            if(!tabSciezki[posY][posX-1] || tabSciezki[posY][posX-1] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX-1, posY);
+            }
+            if(!tabSciezki[posY+1][posX] || tabSciezki[posY+1][posX] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY+1);
+            }
+            if(!tabSciezki[posY][posX+1] || tabSciezki[posY][posX+1] > tabSciezki[posY][posX] ) {
+                tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
+                znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX+1, posY);
+            }
+        break;
     }
 }
 
 void znajdzNajkrotszaSciezkeStart(const unsigned int labirynt[][8]) {
     int tabSciezki[8][8] = {0};
-    int posX = 2;
+    int posX = 0;
     int posY = 0;
 
     znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY);
+    tabSciezki[0][0] = 0;
     narysujWartosci(tabSciezki);
 }
 
