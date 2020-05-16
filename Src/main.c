@@ -19,6 +19,11 @@
 #define WSD 195
 #define WASD 197
 
+#define NORTH   1 //00001000
+#define WEST    2 //00000100
+#define SOUTH   4 //00000010
+#define EAST    8 //00000001
+
 void narysujLabirynt(const unsigned int labirynt[][8]) {
     for(int i=0; i<8; ++i) {
         for(int j=0; j<8; ++j) {
@@ -38,6 +43,7 @@ void narysujWartosci(int wartosci[][8]) {
 }
 
 void znajdzNajkrotszaSciezkeRekurencja(int tabSciezki[8][8], const unsigned int labirynt[][8], int posX, int posY) {
+    // Okropienstwo, prosze nie patrzec
     switch(labirynt[posY][posX]) {
         case W:
             if(!tabSciezki[posY-1][posX] || tabSciezki[posY-1][posX] > tabSciezki[posY][posX] ) {
@@ -211,6 +217,49 @@ void znajdzNajkrotszaSciezkeStart(const unsigned int labirynt[][8]) {
     narysujWartosci(tabSciezki);
 }
 
+void znajdzNajkrotszaSciezkeRekurencjaBIN(int tabSciezki[8][8], const unsigned char labirynt[][8], int posX, int posY) {
+    if(labirynt[posY][posX] & NORTH) {
+        if(!tabSciezki[posY-1][posX] || tabSciezki[posY-1][posX] > tabSciezki[posY][posX] ) {
+            tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
+            znajdzNajkrotszaSciezkeRekurencjaBIN(tabSciezki, labirynt, posX, posY-1);
+        }
+    }
+
+    if(labirynt[posY][posX] & WEST) {
+        if(!tabSciezki[posY][posX-1] || tabSciezki[posY][posX-1] > tabSciezki[posY][posX] ) {
+            tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
+            znajdzNajkrotszaSciezkeRekurencjaBIN(tabSciezki, labirynt, posX-1, posY);
+        }
+    }
+
+    if(labirynt[posY][posX] & SOUTH) {
+        if(!tabSciezki[posY+1][posX] || tabSciezki[posY+1][posX] > tabSciezki[posY][posX] ) {
+            tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
+            znajdzNajkrotszaSciezkeRekurencjaBIN(tabSciezki, labirynt, posX, posY+1);
+        }     
+    }
+
+    if(labirynt[posY][posX] & EAST) {
+        if(!tabSciezki[posY][posX+1] || tabSciezki[posY][posX+1] > tabSciezki[posY][posX] ) {
+            tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
+            znajdzNajkrotszaSciezkeRekurencjaBIN(tabSciezki, labirynt, posX+1, posY);
+        }  
+    }
+}
+
+void znajdzNajkrotszaSciezkeStartBIN(const unsigned char labirynt[][8]) {
+    int tabSciezki[8][8] = {0};
+    int posX = 0;
+    int posY = 0;
+
+    znajdzNajkrotszaSciezkeRekurencjaBIN(tabSciezki, labirynt, posX, posY);
+    tabSciezki[0][0] = 0;
+    narysujWartosci(tabSciezki);
+}
+
+
+
+
 int main() {
     Robot robot = {0, 0, 1}; 	// Obiekt robota (pozycja x, pozycja y, orientacja)
     const unsigned int tabLabiryntu[8][8] = { {D, AD, ASD, AD, AS, SD, ASD, A}, 
@@ -222,8 +271,19 @@ int main() {
                                 {WSD, ASD, WAS, D, WA, WS, D, WAS},
                                 {W, W, WD, AD, AD, WAD, AD, WA} };
 
+    const unsigned char tabLabiryntuBin[8][8] = { {EAST, WEST|EAST, WEST|SOUTH|EAST, WEST|EAST, WEST|SOUTH, WEST|EAST, WEST|SOUTH|EAST, WEST}, 
+                                {EAST, WEST|SOUTH|EAST, NORTH|WEST, SOUTH, NORTH|SOUTH, NORTH|SOUTH, NORTH|EAST, WEST|SOUTH}, 
+                                {SOUTH, NORTH|SOUTH, WEST|EAST, NORTH|WEST|SOUTH, NORTH|EAST, NORTH|WEST|EAST, WEST|SOUTH, NORTH},
+                                {NORTH|SOUTH|EAST, NORTH|WEST, NORTH|SOUTH, NORTH|SOUTH|EAST, WEST|SOUTH, SOUTH, NORTH|EAST, WEST|SOUTH},
+                                {NORTH|SOUTH, EAST, NORTH|WEST|SOUTH, NORTH|EAST, NORTH|WEST, NORTH|SOUTH|EAST, WEST|EAST, NORTH|WEST},
+                                {NORTH|SOUTH|EAST, WEST, NORTH|SOUTH|EAST, WEST, WEST|EAST, WASD, WEST|EAST, WEST|SOUTH},
+                                {NORTH|SOUTH|EAST, WEST|SOUTH|EAST, NORTH|WEST|SOUTH, EAST, NORTH|WEST, NORTH|SOUTH, EAST, NORTH|WEST|SOUTH},
+                                {NORTH, NORTH, NORTH|EAST, WEST|EAST, WEST|EAST, NORTH|WEST|EAST, WEST|EAST, NORTH|WEST} };
+
     narysujLabirynt(tabLabiryntu);
-    znajdzNajkrotszaSciezkeStart(tabLabiryntu);
+    //znajdzNajkrotszaSciezkeStart(tabLabiryntu);
+    znajdzNajkrotszaSciezkeStartBIN(tabLabiryntuBin);
+
 
     return 0;
 }
