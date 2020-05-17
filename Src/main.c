@@ -83,7 +83,7 @@ void znajdzNajkrotszaSciezkeRekurencja(int tabSciezki[8][8], const unsigned char
     }
 }
 
-void znajdzNajkrotszaSciezkeStart(const unsigned char labirynt[][8]) {
+int znajdzNajkrotszaSciezkeStart(const unsigned char labirynt[][8]) {
     int tabSciezki[8][8] = {0};
     int posX = 3;
     int posY = 3;
@@ -91,39 +91,39 @@ void znajdzNajkrotszaSciezkeStart(const unsigned char labirynt[][8]) {
     znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY);
     tabSciezki[posX][posY] = 0;
     narysujWartosci(tabSciezki);
+
+    return tabSciezki;
 }
 
-void przejedzLabirynt(int tabSciezki[][8], const unsigned char labirynt[][8]) {
+void przejedzLabirynt(Robot* robot, int tabSciezki[][8], const unsigned char labirynt[][8]) {
     int posX = 0;
     int posY = 0;
 
     while(posX != 3 && posY != 3) {
-        if(labirynt[posY][posX] & NORTH) {
-            if(!tabSciezki[posY-1][posX] == tabSciezki[posY-1][posX] - 1) {
-                // jedz
-            }
+        if((labirynt[posY][posX] & NORTH) && (tabSciezki[posY-1][posX] == tabSciezki[posY][posX] - 1)) {
+            jedzKierunek(robot, Polnoc);
+            posY -= 1;
         }
-        if(labirynt[posY][posX] & WEST) {
-            if(!tabSciezki[posY][posX-1] || tabSciezki[posY][posX-1] > tabSciezki[posY][posX] ) {
-                // jedz
-            }
+        if((labirynt[posY][posX] & WEST) && (tabSciezki[posY][posX-1] == tabSciezki[posY][posX] - 1)) {
+            jedzKierunek(robot, Zachod);
+            posX -= 1;
         }
-        if(labirynt[posY][posX] & SOUTH) {
-            if(!tabSciezki[posY+1][posX] || tabSciezki[posY+1][posX] > tabSciezki[posY][posX] ) {
-                // jedz
-            }     
+        if((labirynt[posY][posX] & SOUTH) && (tabSciezki[posY+1][posX] == tabSciezki[posY][posX])) {
+            jedzKierunek(robot, Poludnie);
+            posY += 1;
         }
-        if(labirynt[posY][posX] & EAST) {
-            if(!tabSciezki[posY][posX+1] || tabSciezki[posY][posX+1] > tabSciezki[posY][posX] ) {
-                // jedz
-            }  
+        if((labirynt[posY][posX] & EAST) && (tabSciezki[posY][posX+1] == tabSciezki[posY][posX])) {
+            jedzKierunek(robot, Wschod);
+            posX += 1;
         }
     }
+
+    printf("PosX: %d\nPosY: %d\n", posX, posY);
 }
 
 
 int main() {
-    Robot robot = {0, 0, 1}; 	// Obiekt robota (pozycja x, pozycja y, orientacja)
+    Robot robot = {0, 0, Wschod}; 	// Obiekt robota (pozycja x, pozycja y, orientacja)
     const unsigned int tabLabiryntu[8][8] = {   {D, AD, ASD, AD, AS, SD, ASD, A}, 
                                                 {D, ASD, WA, S, WS, WS, WD, AS}, 
                                                 {S, WS, SD, WAS, WD, WAD, AS, W},
@@ -142,8 +142,12 @@ int main() {
                                                     {NORTH|SOUTH|EAST,  WEST|SOUTH|EAST,        NORTH|WEST|SOUTH,   EAST,               NORTH|WEST,     NORTH|SOUTH,            EAST,               NORTH|WEST|SOUTH},
                                                     {NORTH,             NORTH,                  NORTH|EAST,         WEST|EAST,          WEST|EAST,      NORTH|WEST|EAST,        WEST|EAST,          NORTH|WEST} };
 
+    int tabSciezki[8][8];
+
     narysujLabirynt(tabLabiryntu);
-    znajdzNajkrotszaSciezkeStart(tabLabiryntuBin);
+    //tabSciezki = znajdzNajkrotszaSciezkeStart(tabLabiryntuBin);
+
+    //przejedzLabirynt(&robot, )
 
     return 0;
 }

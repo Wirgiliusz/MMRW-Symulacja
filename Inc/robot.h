@@ -21,7 +21,6 @@ void obroc(Robot* robot, enum Strony strona);
 void jedzPrawo(Robot* robot);
 void jedzLewo(Robot* robot);
 void jedzTyl(Robot* robot);
-
-void skanujObszar(Robot* robot);
+void jedzKierunek(Robot* robot, enum Orientacje kierunek);
 
 #endif /* INC_ROBOT_H_ */
