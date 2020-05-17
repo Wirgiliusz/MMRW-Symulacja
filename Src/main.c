@@ -42,88 +42,6 @@ void narysujWartosci(int wartosci[][8]) {
     }
 }
 
-/*
-void znajdzNajkrotszaSciezkeRekurencja(int tabSciezki[8][8], const unsigned char labirynt[][8], int posX, int posY) {
-    // Czy osiagnieta zostala meta
-    
-    if(posX == 3 || posX == 4) {
-        if(posY == 3 || posY == 4) {
-            return;
-        }
-    }
-    
-   // Czy osiagniety zostal start
-   if(posX == 0 && posY == 0) {
-       return;
-   }
-
-    // Przejscie do kolejnego pola w zaleznosci od mozliwych polaczen
-    if(labirynt[posY][posX] & NORTH) {
-        if(!tabSciezki[posY-1][posX] || tabSciezki[posY-1][posX] > tabSciezki[posY][posX] ) {
-            tabSciezki[posY-1][posX] = tabSciezki[posY][posX] + 1;
-            znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY-1);
-        }
-    }
-    if(labirynt[posY][posX] & WEST) {
-        if(!tabSciezki[posY][posX-1] || tabSciezki[posY][posX-1] > tabSciezki[posY][posX] ) {
-            tabSciezki[posY][posX-1] = tabSciezki[posY][posX] + 1;
-            znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX-1, posY);
-        }
-    }
-    if(labirynt[posY][posX] & SOUTH) {
-        if(!tabSciezki[posY+1][posX] || tabSciezki[posY+1][posX] > tabSciezki[posY][posX] ) {
-            tabSciezki[posY+1][posX] = tabSciezki[posY][posX] + 1;
-            znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY+1);
-        }     
-    }
-    if(labirynt[posY][posX] & EAST) {
-        if(!tabSciezki[posY][posX+1] || tabSciezki[posY][posX+1] > tabSciezki[posY][posX] ) {
-            tabSciezki[posY][posX+1] = tabSciezki[posY][posX] + 1;
-            znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX+1, posY);
-        }  
-    }
-}
-*/
-/*
-int znajdzNajkrotszaSciezkeStart(const unsigned char labirynt[][8]) {
-    int tabSciezki[8][8] = {0};
-    int posX = 3;
-    int posY = 3;
-
-    znajdzNajkrotszaSciezkeRekurencja(tabSciezki, labirynt, posX, posY);
-    tabSciezki[posX][posY] = 0;
-    narysujWartosci(tabSciezki);
-
-    return tabSciezki;
-}
-*/
-/*
-void przejedzLabirynt(Robot* robot, int tabSciezki[][8], const unsigned char labirynt[][8]) {
-    int posX = 0;
-    int posY = 0;
-
-    while(posX != 3 && posY != 3) {
-        if((labirynt[posY][posX] & NORTH) && (tabSciezki[posY-1][posX] == tabSciezki[posY][posX] - 1)) {
-            jedzKierunek(robot, Polnoc);
-            posY -= 1;
-        }
-        if((labirynt[posY][posX] & WEST) && (tabSciezki[posY][posX-1] == tabSciezki[posY][posX] - 1)) {
-            jedzKierunek(robot, Zachod);
-            posX -= 1;
-        }
-        if((labirynt[posY][posX] & SOUTH) && (tabSciezki[posY+1][posX] == tabSciezki[posY][posX])) {
-            jedzKierunek(robot, Poludnie);
-            posY += 1;
-        }
-        if((labirynt[posY][posX] & EAST) && (tabSciezki[posY][posX+1] == tabSciezki[posY][posX])) {
-            jedzKierunek(robot, Wschod);
-            posX += 1;
-        }
-    }
-
-    printf("PosX: %d\nPosY: %d\n", posX, posY);
-}
-*/
 
 int main() {
     Robot robot = konstruktorRobota(0, 0, Wschod); 	// Obiekt robota (pozycja x, pozycja y, orientacja)
@@ -135,16 +53,7 @@ int main() {
                                                 {WSD, A, WSD, A, SD, WASD, AD, AS},
                                                 {WSD, ASD, WAS, D, WA, WS, D, WAS},
                                                 {W, W, WD, AD, AD, WAD, AD, WA} };
-    /*
-    const unsigned char tabLabiryntuBin[8][8] = {   {EAST,              WEST|EAST,              WEST|SOUTH|EAST,    WEST|EAST,          WEST|SOUTH,     WEST|EAST,              WEST|SOUTH|EAST,    WEST}, 
-                                                    {EAST,              WEST|SOUTH|EAST,        NORTH|WEST,         SOUTH,              NORTH|SOUTH,    NORTH|SOUTH,            NORTH|EAST,         WEST|SOUTH}, 
-                                                    {SOUTH,             NORTH|SOUTH,            SOUTH|EAST,          NORTH|WEST|SOUTH,   NORTH|EAST,     NORTH|WEST|EAST,        WEST|SOUTH,         NORTH},
-                                                    {NORTH|SOUTH|EAST,  NORTH|WEST,             NORTH|SOUTH,        NORTH|SOUTH|EAST,   WEST|SOUTH,     SOUTH,                  NORTH|EAST,         WEST|SOUTH},
-                                                    {NORTH|SOUTH,       EAST,                   NORTH|WEST|SOUTH,   NORTH|EAST,         NORTH|WEST,     NORTH|SOUTH|EAST,       WEST|EAST,          NORTH|WEST},
-                                                    {NORTH|SOUTH|EAST,  WEST,                   NORTH|SOUTH|EAST,   WEST,               SOUTH|EAST,     NORTH|WEST|SOUTH|EAST,  WEST|EAST,          WEST|SOUTH},
-                                                    {NORTH|SOUTH|EAST,  WEST|SOUTH|EAST,        NORTH|WEST|SOUTH,   EAST,               NORTH|WEST,     NORTH|SOUTH,            EAST,               NORTH|WEST|SOUTH},
-                                                    {NORTH,             NORTH,                  NORTH|EAST,         WEST|EAST,          WEST|EAST,      NORTH|WEST|EAST,        WEST|EAST,          NORTH|WEST} };
-    */
+
 
     narysujLabirynt(tabLabiryntu);
     znajdzNajkrotszaSciezkeStart(&robot);
