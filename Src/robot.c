@@ -9,52 +9,46 @@
 
 void jedzProsto(Robot* robot) {
 	switch(robot->orientacja) {
-	case 0:
+	case Polnoc:
 		robot->posY--;
 		break;
-	case 1:
-		robot->posX++;
+	case Zachod:
+		robot->posX--;
 		break;
-	case 2:
+	case Poludnie:
 		robot->posY++;
 		break;
-	case 3:
-		robot->posX--;
+	case Wschod:
+		robot->posX++;
 		break;
 	}
 }
 
-// strona = 0 - obrot w lewo;
-// strona = 1 - obrot w prawo
-void obroc(Robot* robot, int strona) {
+void obroc(Robot* robot, enum Strony strona) {
 	switch(strona) {
-	case 0:
-		robot->orientacja--;
+	case Lewo:
+		robot->orientacja++;
 		robot->orientacja %=4;
 		break;
-	case 1:
-		robot->orientacja++;
+	case Prawo:
+		robot->orientacja--;
 		robot->orientacja %=4;
 		break;
 	}
 }
 
 void jedzPrawo(Robot* robot) {
-	obroc(robot, 1);
+	obroc(robot, Prawo);
 	jedzProsto(robot);
 }
 
 void jedzLewo(Robot* robot) {
-	obroc(robot, 0);
+	obroc(robot, Lewo);
 	jedzProsto(robot);
 }
 
 void jedzTyl(Robot* robot) {
-	obroc(robot, 1);
-	obroc(robot, 1);
+	obroc(robot, Prawo);
+	obroc(robot, Prawo);
 	jedzProsto(robot);
-}
-
-void skanujObszar(Robot* robot) {
-
 }
