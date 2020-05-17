@@ -42,15 +42,16 @@ void narysujWartosci(int wartosci[][8]) {
     }
 }
 
+/*
 void znajdzNajkrotszaSciezkeRekurencja(int tabSciezki[8][8], const unsigned char labirynt[][8], int posX, int posY) {
     // Czy osiagnieta zostala meta
-    /*
+    
     if(posX == 3 || posX == 4) {
         if(posY == 3 || posY == 4) {
             return;
         }
     }
-    */
+    
    // Czy osiagniety zostal start
    if(posX == 0 && posY == 0) {
        return;
@@ -82,7 +83,8 @@ void znajdzNajkrotszaSciezkeRekurencja(int tabSciezki[8][8], const unsigned char
         }  
     }
 }
-
+*/
+/*
 int znajdzNajkrotszaSciezkeStart(const unsigned char labirynt[][8]) {
     int tabSciezki[8][8] = {0};
     int posX = 3;
@@ -94,7 +96,8 @@ int znajdzNajkrotszaSciezkeStart(const unsigned char labirynt[][8]) {
 
     return tabSciezki;
 }
-
+*/
+/*
 void przejedzLabirynt(Robot* robot, int tabSciezki[][8], const unsigned char labirynt[][8]) {
     int posX = 0;
     int posY = 0;
@@ -120,10 +123,10 @@ void przejedzLabirynt(Robot* robot, int tabSciezki[][8], const unsigned char lab
 
     printf("PosX: %d\nPosY: %d\n", posX, posY);
 }
-
+*/
 
 int main() {
-    Robot robot = {0, 0, Wschod}; 	// Obiekt robota (pozycja x, pozycja y, orientacja)
+    Robot robot = konstruktorRobota(0, 0, Wschod); 	// Obiekt robota (pozycja x, pozycja y, orientacja)
     const unsigned int tabLabiryntu[8][8] = {   {D, AD, ASD, AD, AS, SD, ASD, A}, 
                                                 {D, ASD, WA, S, WS, WS, WD, AS}, 
                                                 {S, WS, SD, WAS, WD, WAD, AS, W},
@@ -132,7 +135,7 @@ int main() {
                                                 {WSD, A, WSD, A, SD, WASD, AD, AS},
                                                 {WSD, ASD, WAS, D, WA, WS, D, WAS},
                                                 {W, W, WD, AD, AD, WAD, AD, WA} };
-
+    /*
     const unsigned char tabLabiryntuBin[8][8] = {   {EAST,              WEST|EAST,              WEST|SOUTH|EAST,    WEST|EAST,          WEST|SOUTH,     WEST|EAST,              WEST|SOUTH|EAST,    WEST}, 
                                                     {EAST,              WEST|SOUTH|EAST,        NORTH|WEST,         SOUTH,              NORTH|SOUTH,    NORTH|SOUTH,            NORTH|EAST,         WEST|SOUTH}, 
                                                     {SOUTH,             NORTH|SOUTH,            SOUTH|EAST,          NORTH|WEST|SOUTH,   NORTH|EAST,     NORTH|WEST|EAST,        WEST|SOUTH,         NORTH},
@@ -141,13 +144,12 @@ int main() {
                                                     {NORTH|SOUTH|EAST,  WEST,                   NORTH|SOUTH|EAST,   WEST,               SOUTH|EAST,     NORTH|WEST|SOUTH|EAST,  WEST|EAST,          WEST|SOUTH},
                                                     {NORTH|SOUTH|EAST,  WEST|SOUTH|EAST,        NORTH|WEST|SOUTH,   EAST,               NORTH|WEST,     NORTH|SOUTH,            EAST,               NORTH|WEST|SOUTH},
                                                     {NORTH,             NORTH,                  NORTH|EAST,         WEST|EAST,          WEST|EAST,      NORTH|WEST|EAST,        WEST|EAST,          NORTH|WEST} };
-
-    int tabSciezki[8][8];
+    */
 
     narysujLabirynt(tabLabiryntu);
-    //tabSciezki = znajdzNajkrotszaSciezkeStart(tabLabiryntuBin);
-
-    //przejedzLabirynt(&robot, )
+    znajdzNajkrotszaSciezkeStart(&robot);
+    narysujWartosci(robot.tabSciezki);
+    przejedzLabirynt(&robot);
 
     return 0;
 }
