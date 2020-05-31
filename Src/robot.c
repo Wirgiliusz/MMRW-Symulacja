@@ -12,7 +12,7 @@ Robot konstruktorRobota(int poczatkoweX, int poczatkoweY, enum Orientacje poczat
     robot.posX = poczatkoweX;
     robot.posY = poczatkoweY;
     robot.orientacja = poczatkowaOrientacja;
-    unsigned char tabLabiryntuTemp[8][8] = {    {EAST,              WEST|EAST,              WEST|SOUTH|EAST,    WEST|EAST,          WEST|SOUTH,     SOUTH|EAST,             WEST|SOUTH|EAST,    WEST}, 
+    /*unsigned char tabLabiryntuTemp[8][8] = {    {EAST,              WEST|EAST,              WEST|SOUTH|EAST,    WEST|EAST,          WEST|SOUTH,     SOUTH|EAST,             WEST|SOUTH|EAST,    WEST}, 
                                                 {EAST,              WEST|SOUTH|EAST,        NORTH|WEST,         SOUTH,              NORTH|SOUTH,    NORTH|SOUTH,            NORTH|EAST,         WEST|SOUTH}, 
                                                 {SOUTH,             NORTH|SOUTH,            SOUTH|EAST,         NORTH|WEST|SOUTH,   NORTH|EAST,     NORTH|WEST|EAST,        WEST|SOUTH,         NORTH},
                                                 {NORTH|SOUTH|EAST,  NORTH|WEST,             NORTH|SOUTH,        NORTH|SOUTH|EAST,   WEST|SOUTH,     SOUTH,                  NORTH|EAST,         WEST|SOUTH},
@@ -20,14 +20,15 @@ Robot konstruktorRobota(int poczatkoweX, int poczatkoweY, enum Orientacje poczat
                                                 {NORTH|SOUTH|EAST,  WEST,                   NORTH|SOUTH|EAST,   WEST,               SOUTH|EAST,     NORTH|WEST|SOUTH|EAST,  WEST|EAST,          WEST|SOUTH},
                                                 {NORTH|SOUTH|EAST,  WEST|SOUTH|EAST,        NORTH|WEST|SOUTH,   EAST,               NORTH|WEST,     NORTH|SOUTH,            EAST,               NORTH|WEST|SOUTH},
                                                 {NORTH,             NORTH,                  NORTH|EAST,         WEST|EAST,          WEST|EAST,      NORTH|WEST|EAST,        WEST|EAST,          NORTH|WEST} };
-    /*unsigned char tabLabiryntuTemp[4][4] = {    {EAST,              WEST|EAST,              WEST|SOUTH|EAST,    SOUTH}, 
-                                                {EAST,              WEST|SOUTH|EAST,        NORTH|WEST|EAST,    NORTH|WEST}, 
+    */
+    unsigned char tabLabiryntuTemp[4][4] = {    {EAST,              WEST|EAST,              WEST|SOUTH,         SOUTH}, 
+                                                {EAST,              WEST|SOUTH|EAST,        NORTH|WEST|EAST,    NORTH|WEST|SOUTH}, 
                                                 {SOUTH,             NORTH|SOUTH,            EAST,               NORTH|WEST|SOUTH},
-                                                {NORTH|EAST,        WEST|NORTH|EAST,        WEST|EAST,          NORTH|WEST} };*/
-    unsigned char labiryntPoznawany[8][8];
-    //unsigned char labiryntPoznawany[4][4];
+                                                {NORTH|EAST,        WEST|NORTH|EAST,        WEST|EAST,          NORTH|WEST} };
+    //unsigned char labiryntPoznawany[8][8];
+    unsigned char labiryntPoznawany[4][4];
 
-    
+    /*
     for(int i=0; i<8; i++) {
         for(int j=0; j<8; j++) {
             robot.tabLabiryntuBin[i][j] = tabLabiryntuTemp[i][j];
@@ -36,7 +37,7 @@ Robot konstruktorRobota(int poczatkoweX, int poczatkoweY, enum Orientacje poczat
             robot.labiryntPoznawany[i][j] = 0;
         }
     }
-    /*
+    */
    for(int i=0; i<4; i++) {
         for(int j=0; j<4; j++) {
             robot.tabLabiryntuBin[i][j] = tabLabiryntuTemp[i][j];
@@ -45,8 +46,7 @@ Robot konstruktorRobota(int poczatkoweX, int poczatkoweY, enum Orientacje poczat
             robot.labiryntPoznawany[i][j] = 0;
         }
     } 
-    */
-
+    
     return robot;
 }
 
@@ -195,8 +195,8 @@ void znajdzNajkrotszaSciezkeRekurencja(Robot* robot, int posX, int posY) {
 }
 
 void znajdzNajkrotszaSciezkeStart(Robot* robot) {
-    int posX = 3;
-    int posY = 3;
+    int posX = KONIEC;
+    int posY = KONIEC;
 
     znajdzNajkrotszaSciezkeRekurencja(robot, posX, posY);
     robot->tabSciezki[posX][posY] = 0;
@@ -206,7 +206,7 @@ void przejedzLabirynt(Robot* robot) {
     printf("Zaczynam przejazd wzdluz sciezki\n");
     printf("PosX: %d PosY: %d\n", robot->posX, robot->posY);
 
-    while(!(robot->posX == 3 && robot->posY == 3)) {
+    while(!(robot->posX == KONIEC && robot->posY == KONIEC)) {
         if((robot->labiryntPoznawany[robot->posY][robot->posX] & NORTH) && (robot->tabSciezki[robot->posY-1][robot->posX] == robot->tabSciezki[robot->posY][robot->posX] - 1)) {
             jedzKierunek(robot, Polnoc);
             printf("Znalazlem droge Polnoc \t\t");
@@ -258,19 +258,15 @@ void przeszukajLabirynt(Robot* robot) {
     robot->posY = 0;
     robot->posX = 0;
     while(1){
-        //if(poznane >= 16){
-        if(poznane >= 64){
+        if(poznane >= 16){
+        //if(poznane >= 64){
             break;
         }
-        printf("X: %d Y: %d numer: %d obecnosc: %d poznane: %d\n", robot->posX, robot->posY, obecnyNumer, robot->obecnosc[robot->posY][robot->posX], poznane);
+        //printf("X: %d Y: %d numer: %d obecnosc: %d poznane: %d\n", robot->posX, robot->posY, obecnyNumer, robot->obecnosc[robot->posY][robot->posX], poznane);
         if(kierunek == 1) {
             skanujPole(robot);
             robot->obecnosc[robot->posY][robot->posX] = obecnyNumer;
-            
-            //printf(": %d\n", robot->labiryntPoznawany[robot->posY][robot->posX]);
-            //printf("Zmienna obecnyNumer: %d\n", obecnyNumer);
-            //printf("X: %d Y: %d\n", robot->posX, robot->posY);
-            //printf("X: %d Y: %d\n", robot->posX, robot->posY);
+            //printf("X: %d Y: %d numer: %d obecnosc: %d poznane: %d\n", robot->posX, robot->posY, obecnyNumer, robot->obecnosc[robot->posY][robot->posX], poznane);
 
             if((robot->labiryntPoznawany[robot->posY][robot->posX] & NORTH) && (robot->obecnosc[robot->posY-1][robot->posX] == 0)) {
                 jedzKierunek(robot, Polnoc);
@@ -280,12 +276,12 @@ void przeszukajLabirynt(Robot* robot) {
                 jedzKierunek(robot, Wschod);
                 ++poznane;
                 ++obecnyNumer;
-            } else if((robot->labiryntPoznawany[robot->posY][robot->posX] & SOUTH) && (robot->obecnosc[robot->posY+1][robot->posX] == 0)) {
-                jedzKierunek(robot, Poludnie);
-                ++poznane;
-                ++obecnyNumer;
             } else if((robot->labiryntPoznawany[robot->posY][robot->posX] & WEST) && (robot->obecnosc[robot->posY][robot->posX-1] == 0)) {
                 jedzKierunek(robot, Zachod);
+                ++poznane;
+                ++obecnyNumer;
+            } else if((robot->labiryntPoznawany[robot->posY][robot->posX] & SOUTH) && (robot->obecnosc[robot->posY+1][robot->posX] == 0)) {
+                jedzKierunek(robot, Poludnie);
                 ++poznane;
                 ++obecnyNumer;
             } else {
@@ -303,13 +299,10 @@ void przeszukajLabirynt(Robot* robot) {
             } else if(robot->labiryntPoznawany[robot->posY][robot->posX] & WEST && obecnyNumer-1 == robot->obecnosc[robot->posY][robot->posX-1]) {
                 jedzKierunek(robot, Zachod);
                 obecnyNumer--;
-                //printf("cos");
             } else if(robot->labiryntPoznawany[robot->posY][robot->posX] & EAST && obecnyNumer-1 == robot->obecnosc[robot->posY][robot->posX+1]) {
                 jedzKierunek(robot, Wschod);
                 obecnyNumer--;
             }
-            //printf(": %d %d %d\n", obecnyNumer, robot->posX, robot->posY);
-            //printf(": %d\n", robot->obecnosc[robot->posY][robot->posX]);
             skanujPole(robot);
             if((robot->labiryntPoznawany[robot->posY][robot->posX] & NORTH && robot->obecnosc[robot->posY-1][robot->posX] == 0) || 
                 (robot->labiryntPoznawany[robot->posY][robot->posX] & SOUTH && robot->obecnosc[robot->posY+1][robot->posX] == 0) || 

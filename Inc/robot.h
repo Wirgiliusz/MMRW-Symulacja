@@ -13,23 +13,25 @@
 #define SOUTH   4 //00000010
 #define EAST    8 //00000001
 
+#define KONIEC  2 
+
 typedef struct Robot {
 	int posX;
 	int posY;
 	enum Orientacje{Polnoc, Zachod, Poludnie, Wschod} orientacja;
 	enum Strony{Lewo, Prawo} strona;
 	int odczytCzujnikow[4];
-    
+    /*
     unsigned char tabLabiryntuBin[8][8];
 	unsigned char labiryntPoznawany[8][8];
     int tabSciezki[8][8];
     int obecnosc[8][8];
-    /*
+    */
     unsigned char tabLabiryntuBin[4][4];
 	unsigned char labiryntPoznawany[4][4];
     int tabSciezki[4][4];
     int obecnosc[4][4];
-    */
+    
 } Robot;
 
 Robot konstruktorRobota(int poczatkoweX, int poczatkoweY, enum Orientacje poczatkowaOrientacja);

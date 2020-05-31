@@ -24,7 +24,7 @@
 #define SOUTH   4 //00000010
 #define EAST    8 //00000001
 
-
+/*
 void narysujLabirynt(const unsigned int labirynt[][8]) {
     for(int i=0; i<8; ++i) {
         for(int j=0; j<8; ++j) {
@@ -42,7 +42,7 @@ void narysujWartosci(int wartosci[][8]) {
         printf("\n");
     }
 }
-/*
+*/
 void narysujLabirynt(const unsigned int labirynt[][4]) {
     for(int i=0; i<4; ++i) {
         for(int j=0; j<4; ++j) {
@@ -60,7 +60,7 @@ void narysujWartosci(int wartosci[][4]) {
         printf("\n");
     }
 }
-*/
+
 
 int main() {
     Robot robot = konstruktorRobota(0, 0, Wschod); 	// Obiekt robota (pozycja x, pozycja y, orientacja)
@@ -74,19 +74,18 @@ int main() {
                                                 {WSD, ASD, WAS, D, WA, WS, D, WAS},
                                                 {W, W, WD, AD, AD, WAD, AD, WA} };
     */
-    /*
+    
     const unsigned int tabLabiryntu[4][4] = {   {D, AD, ASD, S}, 
-                                                {D, ASD, WAD, WA}, 
+                                                {D, ASD, WAD, WAS}, 
                                                 {S, WS, D, WAS},
                                                 {WD, WAD, AD, WA} };
-    */
-    //narysujLabirynt(tabLabiryntu);
+    
+    narysujLabirynt(tabLabiryntu);
     przeszukajLabirynt(&robot);
     znajdzNajkrotszaSciezkeStart(&robot);
     narysujWartosci(robot.tabSciezki);
     printf("______________________________________________\n");
     narysujWartosci(robot.obecnosc);
     przejedzLabirynt(&robot);
-
     return 0;
 }
